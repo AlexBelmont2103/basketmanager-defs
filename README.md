@@ -38,17 +38,38 @@ Alternative: use a GitHub token (PAT) with at least `read:packages` and export i
 import type { MatchDTO, MatchEventDTO, MatchFrameDTO, CourtSnapshot } from '@alexbelmont2103/contracts';
 ```
 
+## Development
+
+- Build (cleans `dist/` first):
+	- `npm run build`
+
 ## Publishing
 
 Publishing is handled by CI when a tag matching `contracts-v*` is pushed.
 
-1) Publish an existing version by pushing a tag matching `contracts-v*`.
+### Best practice (recommended)
 
-Example:
+Use `npm version` so `package.json` and the tag stay in sync.
 
 ```bash
-git tag contracts-v0.1.0
-git push origin contracts-v0.1.0
+# patch/minor/major all work
+npm version patch --tag-version-prefix contracts-v
+
+# push commits + the newly-created tag
+npm run push:with-tags
 ```
 
-2) Or use the **Release** workflow (workflow_dispatch) to bump the version and create/push the tag; CI will publish automatically from that tag.
+`npm run push:with-tags` runs `git push && git push --follow-tags`.
+
+### Tag-only publishing (CI will set the npm version)
+
+If you manually create a tag, CI will derive the npm version from the tag name (e.g. `contracts-v0.1.2` → `0.1.2`) during the publish job.
+
+```bash
+git tag -a contracts-v0.1.2 -m "contracts v0.1.2"
+git push origin contracts-v0.1.2
+```
+
+Notes:
+- You cannot publish over an existing version (you’ll get `npm ERR! 409 Conflict`). Create a new version/tag instead.
+- Avoid reusing/moving tag names once pushed.
