@@ -52,6 +52,25 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Set package version from tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          ref_name="${GITHUB_REF_NAME}"
+          version="${ref_name#contracts-v}"
+
+          if [[ "${ref_name}" == "${version}" ]]; then
+            echo "Expected tag name to start with 'contracts-v' but got '${ref_name}'" >&2
+            exit 1
+          fi
+
+          if [[ ! "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "Tag version '${version}' is not a valid semver" >&2
+            exit 1
+          fi
+
+          npm version "${version}" --no-git-tag-version
+
       - name: Build
         run: npm run build
 
