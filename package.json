@@ -14,7 +14,9 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "version": "npm run build && git add -A dist",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "typescript": "^5.3.3"
