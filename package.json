@@ -15,6 +15,7 @@
   },
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.json",
+    "push:with-tags": "git push && git push --follow-tags",
     "version": "npm run build && git add -A dist",
     "prepare": "npm run build",
     "prepublishOnly": "npm run build"
