@@ -1,0 +1,22 @@
+{
+  "name": "@alexbelmont2103/contracts",
+  "version": "0.1.0",
+  "description": "Shared API contracts (types) for BasketManager frontend/backend",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlexBelmont2103/basketmanager-defs.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
