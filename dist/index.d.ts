@@ -1,1 +1,1 @@
-export * from './match';
+export * from './models';

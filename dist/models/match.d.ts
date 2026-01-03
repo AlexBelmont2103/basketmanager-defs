@@ -1,7 +1,7 @@
 export type MatchStatus = 'scheduled' | 'in-progress' | 'completed' | 'cancelled';
 export type MatchPeriodType = 'Q' | 'OT';
 export type MatchEventType = 'tipoff' | 'play' | 'foul' | 'turnover' | 'score' | 'position' | 'end_period' | 'start_overtime' | 'end_game';
-export type DateLike = string | Date;
+type DateLike = import('./common').DateLike;
 export interface CourtPosition2D {
     x: number;
     y: number;
@@ -31,11 +31,15 @@ export interface MatchEventDTO {
     createdAt: DateLike;
 }
 export interface MatchFrameDTO {
+    _id?: string;
+    matchId?: string;
     seq: number;
     periodType: MatchPeriodType;
     periodNumber: number;
     clockMillisRemaining: number;
     snapshot: CourtSnapshot;
+    createdAt?: DateLike;
+    updatedAt?: DateLike;
 }
 export interface MatchDTO {
     _id?: string;
@@ -56,5 +60,8 @@ export interface MatchDTO {
     awayScore: number;
     startedAt?: DateLike;
     completedAt?: DateLike;
+    createdAt?: DateLike;
+    updatedAt?: DateLike;
     events: MatchEventDTO[];
 }
+export {};

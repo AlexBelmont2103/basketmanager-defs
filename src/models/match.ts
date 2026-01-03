@@ -12,7 +12,7 @@ export type MatchEventType =
   | 'start_overtime'
   | 'end_game';
 
-export type DateLike = string | Date;
+type DateLike = import('./common').DateLike;
 
 export interface CourtPosition2D {
   x: number;
@@ -47,11 +47,15 @@ export interface MatchEventDTO {
 }
 
 export interface MatchFrameDTO {
+  _id?: string;
+  matchId?: string;
   seq: number;
   periodType: MatchPeriodType;
   periodNumber: number;
   clockMillisRemaining: number;
   snapshot: CourtSnapshot;
+  createdAt?: DateLike;
+  updatedAt?: DateLike;
 }
 
 export interface MatchDTO {
@@ -77,6 +81,9 @@ export interface MatchDTO {
 
   startedAt?: DateLike;
   completedAt?: DateLike;
+
+  createdAt?: DateLike;
+  updatedAt?: DateLike;
 
   events: MatchEventDTO[];
 }
