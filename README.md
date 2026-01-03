@@ -4,26 +4,33 @@ Shared TypeScript types (API contracts) for BasketManager.
 
 ## Install (GitHub Packages)
 
-1) Create or update your frontend repo `.npmrc`:
+1) Create or update your project `.npmrc`:
 
 ```ini
-@alexbelmont2103:registry=https://npm.pkg.github.com
+@alexbelmont2103:registry=https://npm.pkg.github.com/
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
 ```
 
-2) Authenticate (one-time):
+2) Authenticate
 
-- Create a GitHub Personal Access Token (classic) with at least: `read:packages`.
-- Then login:
+Recommended (local): use GitHub CLI to source `NODE_AUTH_TOKEN` automatically:
 
 ```bash
-npm login --registry=https://npm.pkg.github.com
+gh auth login
+gh auth refresh -s read:packages
+
+NODE_AUTH_TOKEN="$(gh auth token)" npm i @alexbelmont2103/contracts
 ```
 
-3) Install:
+Alternative: use a GitHub token (PAT) with at least `read:packages` and export it as `NODE_AUTH_TOKEN` before installing.
 
-```bash
-npm i @alexbelmont2103/contracts
-```
+### Troubleshooting
+
+- `E401 Unauthorized`
+	- `gh auth status`
+	- `gh auth refresh -s read:packages`
+- `E404 Not Found` from `registry.npmjs.org` for `@alexbelmont2103/contracts`
+	- Confirm your `.npmrc` contains `@alexbelmont2103:registry=https://npm.pkg.github.com/`.
 
 ## Usage
 
