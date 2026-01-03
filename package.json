@@ -16,6 +16,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "version": "npm run build && git add -A dist",
+    "prepare": "npm run build",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {

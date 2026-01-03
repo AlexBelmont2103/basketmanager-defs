@@ -1,8 +1,6 @@
 name: Release
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
     inputs:
       release_type:
@@ -52,18 +50,15 @@ jobs:
         run: npm ci
 
       - name: Configure git
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Bump version + tag
-        run: npm version ${{ inputs.release_type || 'patch' }} -m "chore(release): %s"
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: npm version ${{ inputs.release_type }} -m "chore(release): %s"
 
       - name: Push commit + tags
+        if: ${{ inputs.dry_run == false }}
         run: git push --follow-tags origin main
-
-      - name: Publish
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.dry_run == false }}
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

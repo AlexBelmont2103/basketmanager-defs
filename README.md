@@ -33,7 +33,9 @@ import type { MatchDTO, MatchEventDTO, MatchFrameDTO, CourtSnapshot } from '@ale
 
 ## Publishing
 
-This repo includes a GitHub Actions workflow that publishes on tags matching `contracts-v*`.
+Publishing is handled by CI when a tag matching `contracts-v*` is pushed.
+
+1) Publish an existing version by pushing a tag matching `contracts-v*`.
 
 Example:
 
@@ -41,3 +43,5 @@ Example:
 git tag contracts-v0.1.0
 git push origin contracts-v0.1.0
 ```
+
+2) Or use the **Release** workflow (workflow_dispatch) to bump the version and create/push the tag; CI will publish automatically from that tag.
